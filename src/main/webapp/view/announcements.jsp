@@ -18,8 +18,8 @@
     </tr>
     <c:forEach var="announcement" items="${announcements}">
         <tr>
-            <td>${announcement.name}</td>
-            <td>${announcement.announcement}</td>
+            <td>${announcement.opUsername}</td>
+            <td>${announcement.announcementDescription}</td>
         </tr>
     </c:forEach>
 </table>

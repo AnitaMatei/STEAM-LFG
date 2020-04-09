@@ -2,6 +2,9 @@ package com.steamlfg.model.entity;
 
 import javax.persistence.*;
 
+/*
+TODO: create proper entity class after creating the db schemas
+ */
 @Entity
 public class Announcement {
     @Id
@@ -9,17 +12,17 @@ public class Announcement {
     @Column(name="id")
     private long id;
 
-    @Column(name="name")
-    private String name;
-    @Column(name="announcement")
-    private String announcement;
+    @Column(name="op_username")
+    private String opUsername;
+    @Column(name="announcement_description")
+    private String announcementDescription;
 
-    public String getName() {
-        return name;
+    public String getOpUsername() {
+        return opUsername;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setOpUsername(String name) {
+        this.opUsername = name;
     }
 
     public long getId() {
@@ -31,11 +34,11 @@ public class Announcement {
     }
 
 
-    public String getAnnouncement() {
-        return announcement;
+    public String getAnnouncementDescription() {
+        return announcementDescription;
     }
 
-    public void setAnnouncement(String announcement) {
-        this.announcement = announcement;
+    public void setAnnouncementDescription(String announcement) {
+        this.announcementDescription = announcement;
     }
 }
