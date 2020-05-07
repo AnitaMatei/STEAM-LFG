@@ -14,7 +14,7 @@ import java.util.List;
 
 @Controller
 public class MainController {
-    @Autowired()
+    @Autowired
     AnnouncementService announcementService;
 
     @GetMapping("/")
