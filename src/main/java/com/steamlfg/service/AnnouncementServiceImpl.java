@@ -15,21 +15,20 @@ public class AnnouncementServiceImpl implements AnnouncementService {
     private AnnouncementRepository announcementRepository;
     private ModelMapper modelMapper;
 
-    public AnnouncementServiceImpl(ModelMapper modelMapper){
+    public AnnouncementServiceImpl(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
     }
 
-    public AnnouncementDTO findById(Long id){
-        Optional<Announcement> announcement=announcementRepository.findById(id);
+    public AnnouncementDTO findById(Long id) {
+        Optional<Announcement> announcement = announcementRepository.findById(id);
         AnnouncementDTO announcementDTO;
 
-        if(announcement.isEmpty())
-        {
-            announcementDTO=new AnnouncementDTO();
+        if (announcement.isEmpty()) {
+            announcementDTO = new AnnouncementDTO();
             announcementDTO.setAnnouncementDescription("-");
             announcementDTO.setOpUsername("not found");
-        }else{
-            announcementDTO = modelMapper.map(announcement.get(),AnnouncementDTO.class);
+        } else {
+            announcementDTO = modelMapper.map(announcement.get(), AnnouncementDTO.class);
         }
         return announcementDTO;
     }
@@ -39,8 +38,8 @@ public class AnnouncementServiceImpl implements AnnouncementService {
         Iterable<Announcement> announcements = announcementRepository.findAll();
         List<AnnouncementDTO> announcementDTOList = new ArrayList<>();
 
-        for(Announcement announcement : announcements){
-            announcementDTOList.add(modelMapper.map(announcement,AnnouncementDTO.class));
+        for (Announcement announcement : announcements) {
+            announcementDTOList.add(modelMapper.map(announcement, AnnouncementDTO.class));
         }
 
         return announcementDTOList;
@@ -48,7 +47,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 
     @Override
     public void addAnnouncement(String opUsername, String announcementDescription) {
-        Announcement announcement=new Announcement();
+        Announcement announcement = new Announcement();
         announcement.setOpUsername(opUsername);
         announcement.setAnnouncementDescription(announcementDescription);
 

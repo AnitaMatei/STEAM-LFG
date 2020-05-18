@@ -1,8 +1,10 @@
 package com.steamlfg.controller;
 
 import com.steamlfg.model.dto.AnnouncementDTO;
+import com.steamlfg.model.dto.UserDTO;
 import com.steamlfg.model.entity.Announcement;
 import com.steamlfg.service.AnnouncementService;
+import com.steamlfg.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,17 +18,20 @@ import java.util.List;
 public class MainController {
     @Autowired
     AnnouncementService announcementService;
+    @Autowired
+    UserService userService;
 
-    @GetMapping("/")
-    public ModelAndView index() {
-        return new ModelAndView("index");
+
+    @GetMapping("/login")
+    public ModelAndView login() {
+        return new ModelAndView("login");
     }
 
-    @GetMapping("/announcements")
+    @GetMapping("/")
     public ModelAndView getAnnouncements(){
-        ModelAndView modelAndView = new ModelAndView("announcements");
-        List<AnnouncementDTO> announcements = announcementService.findAll();
-        modelAndView.addObject("announcements",announcements);
+        ModelAndView modelAndView = new ModelAndView("index");
+        List<UserDTO> users = userService.findAll();
+        modelAndView.addObject("users",users);
 
         return modelAndView;
     }
