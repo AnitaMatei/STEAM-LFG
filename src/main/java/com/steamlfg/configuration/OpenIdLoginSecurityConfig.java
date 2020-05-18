@@ -2,7 +2,7 @@ package com.steamlfg.configuration;
 
 
 import com.steamlfg.model.handler.CustomAuthenticationSuccessHandler;
-import com.steamlfg.service.CustomAuthentificationUserDetailsService;
+import com.steamlfg.service.CustomAuthenticationUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -14,10 +14,10 @@ public class OpenIdLoginSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
     @Autowired
-    CustomAuthentificationUserDetailsService customAuthentificationUserDetailsService;
+    CustomAuthenticationUserDetailsService customAuthenticationUserDetailsService;
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception{
+    protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
                 .anyRequest().authenticated()
@@ -25,7 +25,7 @@ public class OpenIdLoginSecurityConfig extends WebSecurityConfigurerAdapter {
                 .openidLogin()
                 .loginPage("/login").permitAll()
                 .successHandler(customAuthenticationSuccessHandler)
-                .authenticationUserDetailsService(customAuthentificationUserDetailsService)
+                .authenticationUserDetailsService(customAuthenticationUserDetailsService)
                 .and()
                 .formLogin().disable();
     }

@@ -8,13 +8,13 @@ TODO: create proper entity class after creating the db schemas
 @Entity
 public class Announcement {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    @Column(name="id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private long id;
 
-    @Column(name="op_username")
+    @Column(name = "op_username")
     private String opUsername;
-    @Column(name="announcement_description")
+    @Column(name = "announcement_description")
     private String announcementDescription;
 
     public String getOpUsername() {

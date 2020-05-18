@@ -1,7 +1,6 @@
 package com.steamlfg.model.principal;
 
 import com.steamlfg.model.dto.UserDTO;
-import com.steamlfg.model.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;

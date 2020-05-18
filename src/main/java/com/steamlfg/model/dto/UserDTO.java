@@ -1,8 +1,5 @@
 package com.steamlfg.model.dto;
 
-import com.steamlfg.model.entity.User;
-
-import javax.persistence.*;
 import java.util.Objects;
 
 public class UserDTO {
