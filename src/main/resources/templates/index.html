@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+
+    <!-- Static content -->
+    <link rel="stylesheet" href="../static/css/index-style.css">
+    <script type="text/javascript" src="../static/js/app.js"></script>
+
+    <title>STEAM LFG</title>
+</head>
+<body>
+<table border="1">
+    <tr>
+        <td>users</td>
+    </tr>
+    <th:block th:each="user : ${users}">
+        <tr>
+            <td th:text="${user.username}"></td>
+        </tr>
+    </th:block>
+</table>
+</body>
+</html>
