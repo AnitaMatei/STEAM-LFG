@@ -1,10 +1,7 @@
 package com.steamlfg.configuration;
 
 import com.steamlfg.model.handler.CustomAuthenticationSuccessHandler;
-import com.steamlfg.service.AnnouncementService;
-import com.steamlfg.service.AnnouncementServiceImpl;
-import com.steamlfg.service.UserService;
-import com.steamlfg.service.UserServiceImpl;
+import com.steamlfg.service.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
