@@ -5,20 +5,20 @@ import java.util.Objects;
 
 @Entity
 public class User {
-    private int userId;
+    private Integer userId;
     private String username;
     private String iconLink;
     private String oid;
     private String steamProfile;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id")
-    public int getUserId() {
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
@@ -67,7 +67,7 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return userId == user.userId &&
+        return Objects.equals(userId, user.userId) &&
                 Objects.equals(username, user.username) &&
                 Objects.equals(iconLink, user.iconLink) &&
                 Objects.equals(oid, user.oid) &&

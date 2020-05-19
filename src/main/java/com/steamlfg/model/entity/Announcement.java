@@ -1,44 +1,92 @@
 package com.steamlfg.model.entity;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
+import java.util.Objects;
 
-/*
-TODO: create proper entity class after creating the db schemas
- */
 @Entity
 public class Announcement {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private long id;
-
-    @Column(name = "op_username")
-    private String opUsername;
-    @Column(name = "announcement_description")
+    private Integer announcementId;
+    private String announcementTitle;
     private String announcementDescription;
+    private Timestamp dateTime;
+    private User userByUserId;
+    private Game gameByGameId;
 
-    public String getOpUsername() {
-        return opUsername;
+    @Id
+    @Column(name = "announcement_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Integer getAnnouncementId() {
+        return announcementId;
     }
 
-    public void setOpUsername(String name) {
-        this.opUsername = name;
+    public void setAnnouncementId(Integer announcementId) {
+        this.announcementId = announcementId;
     }
 
-    public long getId() {
-        return id;
+    @Basic
+    @Column(name = "announcement_title")
+    public String getAnnouncementTitle() {
+        return announcementTitle;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setAnnouncementTitle(String announcementTitle) {
+        this.announcementTitle = announcementTitle;
     }
 
-
+    @Basic
+    @Column(name = "announcement_description")
     public String getAnnouncementDescription() {
         return announcementDescription;
     }
 
-    public void setAnnouncementDescription(String announcement) {
-        this.announcementDescription = announcement;
+    public void setAnnouncementDescription(String announcementDescription) {
+        this.announcementDescription = announcementDescription;
+    }
+
+    @Basic
+    @Column(name = "date_time")
+    public Timestamp getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(Timestamp dateTime) {
+        this.dateTime = dateTime;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Announcement that = (Announcement) o;
+        return Objects.equals(announcementId, that.announcementId) &&
+                Objects.equals(announcementTitle, that.announcementTitle) &&
+                Objects.equals(announcementDescription, that.announcementDescription) &&
+                Objects.equals(dateTime, that.dateTime);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(announcementId, announcementTitle, announcementDescription, dateTime);
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
+    public User getUserByUserId() {
+        return userByUserId;
+    }
+
+    public void setUserByUserId(User userByUserId) {
+        this.userByUserId = userByUserId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "game_id", referencedColumnName = "game_id", nullable = false)
+    public Game getGameByGameId() {
+        return gameByGameId;
+    }
+
+    public void setGameByGameId(Game gameByGameId) {
+        this.gameByGameId = gameByGameId;
     }
 }

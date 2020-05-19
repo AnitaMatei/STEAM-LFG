@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org">
+
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
@@ -9,38 +10,24 @@
 
     <title>STEAM LFG</title>
 </head>
+
 <body>
-<h1>STEAM LFG</h1>
-<hr>
-<div tiles:fragment="content">
-    <form name="form" th:action="@{/login/openid}" method="post" id="openid_form">
+    <h1 th:text="${loginmsg}"></h1>
+    <hr>
+    <div tiles:fragment="loginpanel">
+        <a th:href="@{/}" th:text="${'HOME'}"></a>
+    </div>
+    <div tiles:fragment="content">
+        <div th:if="${steambutton == 'visible'}">
+            <form name="form" th:action="@{/login/openid}" method="post" id="openid_form">
 
-        <div id="openid_input_area">
-            <input id="openid_identifier" name="openid_identifier" type="hidden"
-                   value="http://steamcommunity.com/openid"/>
-            <input id="openid_submit" type="image"
-                   src="https://steamcommunity-a.akamaihd.net/public/images/signinthroughsteam/sits_02.png"
-                   alt="Sign in with Steam"/>
+                <div id="openid_input_area">
+                    <input id="openid_identifier" name="openid_identifier" type="hidden" value="http://steamcommunity.com/openid" />
+                    <input id="openid_submit" type="image" src="https://steamcommunity-a.akamaihd.net/public/images/signinthroughsteam/sits_02.png" alt="Sign in with Steam" />
+                </div>
+            </form>
         </div>
-    </form>
-    <form action="postAnnouncement" method="post" onsubmit="return validate()">
-        <table>
-            <tr>
-                <td>Enter Your name</td>
-                <td><input id="name" name="name"></td>
-            </tr>
-            <tr>
-                <td>Enter your announcement description</td>
-                <td><input id="description" name="description"></td>
-            </tr>
-            <tr>
-                <td><input type="submit" value="Submit"></td>
-            </tr>
-        </table>
-    </form>
-    <button onclick="printHello()">Click me</button>
-
-</div>
+    </div>
 </body>
 
 <!--<script>
@@ -59,4 +46,5 @@
         alert("Hello");
     }
 </script>-->
+
 </html>

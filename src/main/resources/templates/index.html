@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
+
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -15,13 +16,21 @@
 </head>
 <body style="background-color: #1b2838">
 
+<!--/*@thymesVar id="avatar" type=""*/-->
+<!--/*@thymesVar id="steamprofile" type=""*/-->
+<!--/*@thymesVar id="username" type=""*/-->
+<!--/*@thymesVar id="loginbutton" type=""*/-->
+<!--/*@thymesVar id="users" type=""*/-->
+
 <nav class="navbar navbar-expand-sm navbar-dark" style="background-color: #171a21;">
     <div class="container">
-        <a class="navbar-brand mb-0 h1" href="index.html">Steam LFG</a>
+
+        <a class="navbar-brand mb-0 h1" th:href="@{/}">Steam LFG</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+
         <div class="collapse navbar-collapse" id="navbarNav">
 
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
@@ -29,11 +38,21 @@
                 <li class="nav-item"><a class="nav-link" href="#">About</a></li>
             </ul>
 
-            <a class="my-2 my-lg-0" href="login.html">
-                <img src="https://steamcdn-a.akamaihd.net/steamcommunity/public/images/steamworks_docs/english/sits_large_noborder.png"
-                     alt="Sign in through Steam">
-            </a>
+            <!--If user is not logged in-->
+            <div th:if="${loginbutton == 'visible'}">
+                <a class="my-2 my-lg-0" type="submit" th:href="@{/login}">
+                    <img src="https://steamcdn-a.akamaihd.net/steamcommunity/public/images/steamworks_docs/english/sits_large_noborder.png"
+                         alt="Sign in through Steam"></a>
+            </div>
+            <!--Else user is logged in and we display user's Steam Avatar-->
+            <div th:unless="${loginbutton == 'visible'}">
+                <img th:src="${avatar}" alt="Steam Avatar" src="">
+                <a th:href="@{${steamprofile}}" th:text="${username}"></a>
+                <a th:href="@{/logout}" th:text="${'LOG OUT'}"></a>
+            </div>
+
         </div>
+
     </div>
 </nav>
 

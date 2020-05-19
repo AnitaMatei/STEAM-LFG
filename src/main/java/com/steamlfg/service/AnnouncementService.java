@@ -7,9 +7,8 @@ import java.util.List;
 
 @Service
 public interface AnnouncementService {
-    AnnouncementDTO findById(Long id);
-
-    List<AnnouncementDTO> findAll();
-
-    void addAnnouncement(String opUsername, String announcementDescription);
+    public AnnouncementDTO findById(Integer id);
+    public List<AnnouncementDTO> findAll();
+    public void addAnnouncement(String title, String description, String gameName);
+    public List<AnnouncementDTO> findAllByDate(Integer page);
 }
