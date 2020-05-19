@@ -1,7 +1,10 @@
 package com.steamlfg.configuration;
 
 import com.steamlfg.model.handler.CustomAuthenticationSuccessHandler;
-import com.steamlfg.service.*;
+import com.steamlfg.service.AnnouncementService;
+import com.steamlfg.service.AnnouncementServiceImpl;
+import com.steamlfg.service.UserService;
+import com.steamlfg.service.UserServiceImpl;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,12 +13,12 @@ import org.springframework.context.annotation.Configuration;
 public class AppConfig {
 
     @Bean
-    public AnnouncementService announcementService(){
+    public AnnouncementService announcementService() {
         return new AnnouncementServiceImpl(modelMapper());
     }
 
     @Bean
-    public UserService userService(){
+    public UserService userService() {
         return new UserServiceImpl(modelMapper());
     }
 
@@ -30,7 +33,7 @@ public class AppConfig {
     }
 
     @Bean
-    public CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler(){
+    public CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler() {
         return new CustomAuthenticationSuccessHandler();
     }
 

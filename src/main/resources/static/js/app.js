@@ -3,10 +3,12 @@ function validate() {
     if (name == '') {
         alert('Please enter a valid name.');
         return false;
-    }
-    else if(description=='') {
+    } else if (description == '') {
         alert('Please enter a valid name.');
         return false;
-    }
-    else return true;
+    } else return true;
+}
+
+function printHello() {
+    alert("Hello");
 }

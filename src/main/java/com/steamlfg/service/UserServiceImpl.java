@@ -69,14 +69,14 @@ public class UserServiceImpl implements UserService {
 
         userRepository.save(user);
 
-        return modelMapper.map(user,UserDTO.class);
+        return modelMapper.map(user, UserDTO.class);
     }
 
-    private List<String> getSteamUserInfo(String oid){
+    private List<String> getSteamUserInfo(String oid) {
         List<String> userInfo = new ArrayList<>();
 
         try {
-            String userURI = "https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=8AD909F0F1A22F8E2FF5F9AA23E16D63&steamids="+ oid;
+            String userURI = "https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=8AD909F0F1A22F8E2FF5F9AA23E16D63&steamids=" + oid;
             String gameString = new HttpClientGame(userURI).getAll();
             userInfo = ParseSteamData.parseUserInfoList(gameString);
         } catch (ServerException e) {

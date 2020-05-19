@@ -26,7 +26,7 @@ public class MainController {
     public ModelAndView getAnnouncements(){
         ModelAndView modelAndView = createModelLoggedIn("index");
         List<UserDTO> users = userService.findAll();
-        modelAndView.addObject("users",users);
+        modelAndView.addObject("users", users);
 
         return modelAndView;
     }
@@ -34,7 +34,6 @@ public class MainController {
     @PostMapping("/postAnnouncement")
     public ModelAndView postAnnouncement(@RequestParam("name") String name, @RequestParam("description") String announcementDesc) {
         ModelAndView modelAndView=new ModelAndView("announcement posted");
-
         return modelAndView;
     }
 

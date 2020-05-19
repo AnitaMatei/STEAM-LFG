@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class CustomAuthentificationUserDetailsService implements AuthenticationUserDetailsService<OpenIDAuthenticationToken> {
+public class CustomAuthenticationUserDetailsService implements AuthenticationUserDetailsService<OpenIDAuthenticationToken> {
     @Autowired
     private UserService userService;
 
@@ -20,7 +20,7 @@ public class CustomAuthentificationUserDetailsService implements AuthenticationU
         System.out.println("Loading details for user with steamid " + openIDAuthenticationToken.getName());
         UserDTO user = userService.findByOid(openIDAuthenticationToken.getName());
 
-        if(user == null)
+        if (user == null)
             return new UserPrincipal(userService.saveUser(openIDAuthenticationToken.getName()));
         else return new UserPrincipal(user);
     }

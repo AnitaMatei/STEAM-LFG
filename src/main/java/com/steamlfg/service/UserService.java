@@ -1,6 +1,5 @@
 package com.steamlfg.service;
 
-import com.steamlfg.model.dto.AnnouncementDTO;
 import com.steamlfg.model.dto.UserDTO;
 import org.springframework.stereotype.Service;
 
