@@ -1,17 +1,14 @@
 package com.steamlfg.service;
 
-import com.google.inject.internal.asm.$AnnotationVisitor;
 import com.steamlfg.model.dto.UserDTO;
 import com.steamlfg.model.entity.User;
 import com.steamlfg.repository.UserRepository;
 import com.steamlfg.utils.HttpClientGame;
-import com.steamlfg.utils.ParseSteamUserData;
+import com.steamlfg.utils.ParseSteamData;
 import org.modelmapper.ModelMapper;
 import org.openid4java.server.ServerException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.json.GsonJsonParser;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -26,7 +23,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO findByUserId(int userId) {
+    public UserDTO findByUserId(Integer userId) {
         Optional<User> user = userRepository.findByUserId(userId);
         UserDTO userDTO;
         if (user.isEmpty()) {
@@ -81,7 +78,7 @@ public class UserServiceImpl implements UserService {
         try {
             String userURI = "https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=8AD909F0F1A22F8E2FF5F9AA23E16D63&steamids="+ oid;
             String gameString = new HttpClientGame(userURI).getAll();
-            userInfo = ParseSteamUserData.parseUserInfoList(gameString);
+            userInfo = ParseSteamData.parseUserInfoList(gameString);
         } catch (ServerException e) {
             e.printStackTrace();
         }

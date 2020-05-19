@@ -15,7 +15,6 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         UserPrincipal user = (UserPrincipal) authentication.getPrincipal();
 
         System.out.println("An user succesfully logged in with steamid " + user.getUsername());
-
-        httpServletResponse.sendRedirect("/");
+        httpServletResponse.sendRedirect("/login?status=success");
     }
 }

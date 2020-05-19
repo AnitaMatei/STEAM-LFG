@@ -10,15 +10,17 @@
     <title>STEAM LFG</title>
 </head>
 <body>
-<table border="1">
-    <tr>
-        <td>users</td>
-    </tr>
-    <th:block th:each="user : ${users}">
-        <tr>
-            <td th:text="${user.username}"></td>
-        </tr>
-    </th:block>
-</table>
+<div tiles:fragment="loginpanel">
+    <a th:href="@{/}" th:text="${'HOME'}"></a>
+    <div th:if="${loginbutton == 'visible'}">
+        <a type="submit" th:href="@{/login}">LOG IN</a>
+    </div>
+    <div th:unless="${loginbutton == 'visible'}">
+        <img th:src="${avatar}">
+        <a th:href="@{${steamprofile}}" th:text="${username}"></a>
+        <a th:href="@{/logout}" th:text="${'LOG OUT'}"></a>
+    </div>
+</div>
+
 </body>
 </html>
