@@ -22,7 +22,7 @@ public class OpenIdLoginSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/api/announcement/add").permitAll()
+                .antMatchers("/api/announcement/add").authenticated()
                 /*.antMatchers("/css/**").permitAll()*/
                 .anyRequest().permitAll()
                 .and()
