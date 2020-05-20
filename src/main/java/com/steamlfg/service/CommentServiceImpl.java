@@ -48,11 +48,11 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<CommentDTO> findAllByAnnouncementHashOrderByDateTimeDesc(Integer page, int announcementHash) {
+    public List<CommentDTO> findAllByAnnouncementHashOrderByMessageDateTimeDesc(Integer page, int announcementHash) {
         Pageable pageable = PageRequest.of(page,5);
         List<CommentDTO> commentDTOList = new ArrayList<>();
         Announcement announcement = announcementRepository.findByAnnouncementHash(announcementHash).get();
-        List<Comment> comments = commentRepository.findAllByAnnouncementByAnnouncementIdOrderByDateTimeDesc(pageable,announcement);
+        List<Comment> comments = commentRepository.findAllByAnnouncementByAnnouncementIdOrderByMessageDateTimeDesc(pageable,announcement);
 
         for (Comment comment : comments) {
             commentDTOList.add(modelMapper.map(comment, CommentDTO.class));

@@ -20,9 +20,9 @@ public class CommentController {
     }
 
     @GetMapping("/page/{id}")
-    List<CommentDTO> getLastAnnouncementByPage(@PathVariable Integer id, @RequestParam int announceHash) {
+    List<CommentDTO> getLastAnnouncementByPage(@PathVariable Integer id, @RequestParam int announcementHash) {
         if (id < 0)
             return null;
-        else return commentService.findAllByAnnouncementHashOrderByDateTimeDesc(id,announceHash);
+        else return commentService.findAllByAnnouncementHashOrderByMessageDateTimeDesc(id,announcementHash);
     }
 }

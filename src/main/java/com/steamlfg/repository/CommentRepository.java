@@ -11,5 +11,5 @@ import java.util.List;
 
 @Repository
 public interface CommentRepository  extends CrudRepository<Comment,Integer> {
-    List<Comment> findAllByAnnouncementByAnnouncementIdOrderByDateTimeDesc(Pageable pageable, Announcement announcement);
+    List<Comment> findAllByAnnouncementByAnnouncementIdOrderByMessageDateTimeDesc(Pageable pageable, Announcement announcement);
 }
