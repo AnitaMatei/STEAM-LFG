@@ -73,15 +73,28 @@ public class AnnouncementServiceImpl implements AnnouncementService {
     }
 
     @Override
-    public void addAnnouncement(String title, String description, String gameName) {
+    public AnnouncementDTO addAnnouncement(String title, String description, String gameName) {
         Announcement announcement = new Announcement();
         UserDTO user = ((UserPrincipal)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
         announcement.setAnnouncementDescription(description);
         announcement.setAnnouncementTitle(title);
         announcement.setDateTime(new Timestamp(new Date().getTime()));
         announcement.setUserByUserId(userRepository.findByOid(user.getOid()).get());
-        System.out.println(gameName);
+        announcement.setAnnouncementHash(announcement.hashCode());
+
         announcement.setGameByGameId(gameRepository.findByGameName(gameName).get());
-        announcementRepository.save(announcement);
+        return modelMapper.map(announcementRepository.save(announcement),AnnouncementDTO.class);
+    }
+
+    @Override
+    public AnnouncementDTO findByAnnouncementHash(int announcementHash) {
+        Optional<Announcement> announcement = announcementRepository.findByAnnouncementHash(announcementHash);
+        AnnouncementDTO announcementDTO;
+
+        if (announcement.isEmpty())
+            return null;
+
+        announcementDTO = modelMapper.map(announcement.get(), AnnouncementDTO.class);
+        return announcementDTO;
     }
 }

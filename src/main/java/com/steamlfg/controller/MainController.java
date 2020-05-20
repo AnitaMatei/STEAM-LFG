@@ -1,5 +1,6 @@
 package com.steamlfg.controller;
 
+import com.steamlfg.model.dto.AnnouncementDTO;
 import com.steamlfg.model.dto.UserDTO;
 import com.steamlfg.model.principal.UserPrincipal;
 import com.steamlfg.service.AnnouncementService;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -23,17 +25,23 @@ public class MainController {
 
 
     @GetMapping("/")
-    public ModelAndView getAnnouncements(){
+    public ModelAndView getIndexPage(){
         ModelAndView modelAndView = createModelLoggedIn("index");
-        List<UserDTO> users = userService.findAll();
-        modelAndView.addObject("users", users);
-
         return modelAndView;
     }
 
-    @PostMapping("/postAnnouncement")
-    public ModelAndView postAnnouncement(@RequestParam("name") String name, @RequestParam("description") String announcementDesc) {
-        ModelAndView modelAndView=new ModelAndView("announcement posted");
+    @GetMapping("/about")
+    public ModelAndView getAboutPage(){
+        ModelAndView modelAndView = createModelLoggedIn("about");
+        return modelAndView;
+    }
+
+    @GetMapping("/announcements/{id}")
+    public ModelAndView getAnnouncement(@PathVariable int id){
+        ModelAndView modelAndView = new ModelAndView("announcement");
+        AnnouncementDTO announcementDTO = announcementService.findByAnnouncementHash(id);
+
+        modelAndView.addObject("announcement_object",announcementDTO);
         return modelAndView;
     }
 
@@ -44,8 +52,7 @@ public class MainController {
         if(!(principal instanceof UserPrincipal)){
             model.addObject("loginbutton","visible");
             return model;
-        }else
-            model.addObject("loginbutton","invisible");
+        }
         UserDTO user = ((UserPrincipal)principal).getUser();
         model.addObject("username",user.getUsername());
         model.addObject("avatar",user.getIconLink());

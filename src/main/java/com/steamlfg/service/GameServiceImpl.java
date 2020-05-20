@@ -34,6 +34,17 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
+    public List<GameDTO> findTop20ByGameNameContains(String gameName) {
+        List<Game> games = gameRepository.findTop20ByGameNameContains(gameName);
+        List<GameDTO> gameDTOS = new ArrayList<>();
+        for(Game game : games){
+            gameDTOS.add(modelMapper.map(game,GameDTO.class));
+        }
+
+        return gameDTOS;
+    }
+
+    @Override
     public GameDTO findByGameName(String name) {
         Optional<Game> game = gameRepository.findByGameName(name);
 
@@ -41,19 +52,4 @@ public class GameServiceImpl implements GameService {
             return null;
         return modelMapper.map(game,GameDTO.class);
     }
-//
-//    @PostConstruct
-//    @Override
-//    public void addGames() {
-//        List<Game> gameList = new ArrayList<>();
-//        String gamesURI = "http://api.steampowered.com/ISteamApps/GetAppList/v0001/";
-//        try {
-//
-//            String gameString = new HttpClientGame(gamesURI).getAll();
-//            gameList = ParseSteamData.parseGameList(gameString);
-//        } catch (ServerException e) {
-//            e.printStackTrace();
-//        }
-//        //gameRepository.saveAll(gameList);
-//    }
 }

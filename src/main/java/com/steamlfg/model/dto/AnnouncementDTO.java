@@ -11,8 +11,9 @@ public class AnnouncementDTO {
     private String announcementTitle;
     private String announcementDescription;
     private Timestamp dateTime;
-    private User userByUserId;
-    private Game gameByGameId;
+    private UserDTO userByUserId;
+    private GameDTO gameByGameId;
+    private Integer announcementHash;
 
     public String getAnnouncementTitle() {
         return announcementTitle;
@@ -38,6 +39,15 @@ public class AnnouncementDTO {
         this.dateTime = dateTime;
     }
 
+    public Integer getAnnouncementHash() {
+        return announcementHash;
+    }
+
+    public void setAnnouncementHash(Integer announcementHash) {
+        this.announcementHash = announcementHash;
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -53,19 +63,19 @@ public class AnnouncementDTO {
         return Objects.hash(announcementTitle, announcementDescription, dateTime);
     }
 
-    public User getUserByUserId() {
+    public UserDTO getUserByUserId() {
         return userByUserId;
     }
 
-    public void setUserByUserId(User userByUserId) {
+    public void setUserByUserId(UserDTO userByUserId) {
         this.userByUserId = userByUserId;
     }
 
-    public Game getGameByGameId() {
+    public GameDTO getGameByGameId() {
         return gameByGameId;
     }
 
-    public void setGameByGameId(Game gameByGameId) {
+    public void setGameByGameId(GameDTO gameByGameId) {
         this.gameByGameId = gameByGameId;
     }
 }
