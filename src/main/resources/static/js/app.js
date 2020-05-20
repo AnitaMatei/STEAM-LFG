@@ -9,6 +9,7 @@ function validate() {
     } else return true;
 }
 
+/*
 function printHello() {
     alert("Hello");
-}
+}*/

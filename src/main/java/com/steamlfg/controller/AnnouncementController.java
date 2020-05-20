@@ -24,14 +24,13 @@ public class AnnouncementController {
         return announcementService.findById(id);
     }
 
-    @GetMapping("/add")
+    @PostMapping("/add")
     void addAnnouncement(@RequestParam Map<String, String> query) {
         announcementService.addAnnouncement(query.get("title"), query.get("description"), query.get("gameName"));
     }
 
     @GetMapping("/page/{id}")
     List<AnnouncementDTO> getLastAnnouncementByPage(@PathVariable Integer id) {
-        List<AnnouncementDTO> announcementDTOList = new ArrayList<>();
         if (id < 0)
             return null;
         else return announcementService.findAllByDate(id);
