@@ -26,7 +26,7 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public GameDTO findBySteamAppId(String steamAppId) {
-        Optional<Game> game = gameRepository.findBySteamAppId(steamAppId);
+        Optional<Game> game = gameRepository.findTopBySteamAppId(steamAppId);
 
         if(game.isEmpty())
             return null;
