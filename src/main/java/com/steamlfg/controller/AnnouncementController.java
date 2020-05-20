@@ -26,7 +26,7 @@ public class AnnouncementController {
 
     @PostMapping("/add")
     AnnouncementDTO addAnnouncement(@RequestParam Map<String, String> query) {
-        return announcementService.addAnnouncement(query.get("title"), query.get("description"), query.get("gameName"));
+        return announcementService.addAnnouncement(query.get("title"), query.get("description"), query.get("appId"));
     }
 
     @GetMapping("/page/{id}")

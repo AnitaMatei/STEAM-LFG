@@ -73,7 +73,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
     }
 
     @Override
-    public AnnouncementDTO addAnnouncement(String title, String description, String gameName) {
+    public AnnouncementDTO addAnnouncement(String title, String description, String appId) {
         Announcement announcement = new Announcement();
         UserDTO user = ((UserPrincipal)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
         announcement.setAnnouncementDescription(description);
@@ -81,8 +81,8 @@ public class AnnouncementServiceImpl implements AnnouncementService {
         announcement.setDateTime(new Timestamp(new Date().getTime()));
         announcement.setUserByUserId(userRepository.findByOid(user.getOid()).get());
         announcement.setAnnouncementHash(announcement.hashCode());
+        announcement.setGameByGameId(gameRepository.findTopBySteamAppId(appId).get());
 
-        announcement.setGameByGameId(gameRepository.findByGameName(gameName).get());
         return modelMapper.map(announcementRepository.save(announcement),AnnouncementDTO.class);
     }
 

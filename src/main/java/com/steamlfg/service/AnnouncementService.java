@@ -10,7 +10,7 @@ import java.util.List;
 public interface AnnouncementService {
     AnnouncementDTO findById(Integer id);
     List<AnnouncementDTO> findAll();
-    AnnouncementDTO addAnnouncement(String title, String description, String gameName);
+    AnnouncementDTO addAnnouncement(String title, String description, String appId);
     List<AnnouncementDTO> findAllByDate(Integer page);
     AnnouncementDTO findByAnnouncementHash(int hash);
 }
