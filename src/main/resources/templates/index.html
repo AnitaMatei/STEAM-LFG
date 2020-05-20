@@ -8,13 +8,16 @@
     <!--Bootstrap css-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+
     <!-- Static content -->
     <link rel="stylesheet" href="../static/css/index-style.css">
     <script type="text/javascript" src="../static/js/app.js"></script>
 
     <title>STEAM LFG</title>
 </head>
-<body style="background-color: #1b2838" onload="getPagePosts(0)">
+<body style="background-color: #1b2838;" onload="onLoad()">
 
 <!--/*@thymesVar id="avatar" type=""*/-->
 <!--/*@thymesVar id="steamprofile" type=""*/-->
@@ -57,17 +60,58 @@
 </nav>
 
 <div class="container mt-5">
-    <table class="table table-striped table-dark" style="background-color: #1b2838">
+    <button id="create-post-btn" type="button" class="btn btn-primary justify-content-center" data-toggle="modal"
+            data-target="#create-post-modal" onclick="onCreateBtnClick()">
+        Create Announcement
+    </button>
+
+    <div class="modal fade" id="create-post-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Create an announcement</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="post-form" action="/api/announcement/add" method="post">
+                    <div class="form-group">
+                        <label for="post-title-input">Title</label>
+                        <input class="form-control" id="post-title-input" type="text" name="title">
+                    </div>
+                    <div class="form-group">
+                        <label for="post-desc-input">Description</label>
+                        <textarea class="form-control" id="post-desc-input" name="description" rows="5"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="select-game">Related Game</label>
+                        <input id="select-game" class="form-control" type="text">
+                        <select class="form-control" name="appId" id="matched-games"></select>
+                        <!--<select id="select-game" class="form-control selectpicker" data-live-search="true"
+                                onkeypress="getGameSearchResults()">
+                            <option value="" disabled selected>Choose related game</option>
+                        </select>-->
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="submit" form="post-form" class="btn btn-primary">Post</button>
+            </div>
+        </div>
+    </div>
+
+    <table class="table table-striped table-dark" style="background-color: #1b2838;">
         <thead>
         <tr>
-            <th class="" scope="col" onclick="printHello()">#</th>
+            <th scope="col">#</th>
             <th scope="col">Game Name</th>
             <th scope="col">Title</th>
             <th scope="col">User</th>
         </tr>
         </thead>
-        <tbody id="posts-body">
-        </tbody>
+        <tbody id="posts-body"></tbody>
     </table>
 
     <ul class="nav nav-pills justify-content-center">
@@ -78,14 +122,13 @@
 
 <!--My scripts-->
 <script>
-    const root = "http://localhost:8080" + "/api/announcement/page/";
-    let postsJson;
+    const rootURL = "http://localhost:8080";
+    const pageURL = rootURL + "/api/announcement/page/";
+    const gamesSearchURL = rootURL + "/api/game/search";
 
-    function printHello() {
-        alert("Hello");
-    }
+    let searchInput;
 
-    function addDataToTable() {
+    function addDataToTable(postsJson) {
         let tbody = document.querySelector("#posts-body");
         tbody.innerHTML = "";        // Clear previous data, to prepare for loading new data
 
@@ -106,19 +149,51 @@
         }
     }
 
+    function setGamesSelectOptions(gamesJson) {
+        let select = document.getElementById("matched-games");
+        select.innerHTML = '';  //Clear old options
+        for (let i = 0; i < gamesJson.length; i++) {
+            let option = document.createElement("option");
+            option.value = gamesJson[i].steamAppId;
+            option.innerText = gamesJson[i].gameName;
+            select.appendChild(option);
+        }
+    }
+
+    function getGameSearchResults() {
+        let gameName = searchInput.value;
+        if (gameName !== '') {
+            let url = new URL(gamesSearchURL);
+            let params = {gameName: searchInput.value};
+            url.search = new URLSearchParams(params).toString();
+            fetch(url.toString())
+                .then(response => response.json())
+                .then(data => {
+                    setGamesSelectOptions(data);
+                    console.log(data);
+                })
+                .catch(err => console.log('ERROR: ', err.message));
+        }
+    }
+
     function getPagePosts(pageId) {
-        fetch(root + pageId)
-            .then(response => {
-                return response.json();
-            })
+        fetch(pageURL + pageId)
+            .then(response => response.json())
             .then(data => {
-                postsJson = data;
-                console.log(postsJson);
-                addDataToTable();
+                addDataToTable(data);
+                // console.log(data);
             })
-            .catch(err => {
-                console.log('ERROR: ', err.message);
-            });
+            .catch(err => console.log('ERROR: ', err.message));
+    }
+
+    function onCreateBtnClick() {
+        // searchInput = document.querySelector("#userDropdown .bs-searchbox input");
+        searchInput = document.querySelector("#select-game");
+        searchInput.addEventListener('keyup', getGameSearchResults);
+    }
+
+    function onLoad() {
+        getPagePosts(0);
     }
 </script>
 
@@ -132,6 +207,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
         integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
         crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 </body>
 
 </html>
