@@ -79,27 +79,27 @@
 <!--My scripts-->
 <script>
     const root = "http://localhost:8080" + "/api/announcement/page/";
-    let posts;
+    let postsJson;
 
     function printHello() {
         alert("Hello");
     }
 
     function addDataToTable() {
-        //TODO add link over username td, to user's Steam profile
         let tbody = document.querySelector("#posts-body");
         tbody.innerHTML = "";        // Clear previous data, to prepare for loading new data
 
-        for (let i = 0; i < posts.length; i++) {
+        for (let i = 0; i < postsJson.length; ++i) {
             let th = document.createElement("th");
             th.scope = "row";
             th.textContent = (i + 1).toString();
             let title_td = document.createElement("td");
-            title_td.textContent = posts[i].announcementTitle;
+            title_td.textContent = postsJson[i].announcementTitle;
             let gameName_td = document.createElement("td");
-            gameName_td.textContent = posts[i].gameByGameId.gameName;
+            gameName_td.textContent = postsJson[i].gameByGameId.gameName;
             let userName_td = document.createElement("td");
-            userName_td.textContent = posts[i].userByUserId.username;
+            userName_td.innerHTML = '<a href="' + postsJson[i].userByUserId.steamProfile + '">' +
+                postsJson[i].userByUserId.username + '</a>';
             let tr = document.createElement("tr");
             tr.append(th, gameName_td, title_td, userName_td);
             tbody.appendChild(tr);
@@ -112,8 +112,8 @@
                 return response.json();
             })
             .then(data => {
-                posts = data;
-                // console.log(posts);
+                postsJson = data;
+                console.log(postsJson);
                 addDataToTable();
             })
             .catch(err => {
