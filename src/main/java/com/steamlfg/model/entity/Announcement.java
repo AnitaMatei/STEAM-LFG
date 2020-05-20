@@ -12,6 +12,7 @@ public class Announcement {
     private Timestamp dateTime;
     private User userByUserId;
     private Game gameByGameId;
+    private Integer announcementHash;
 
     @Id
     @Column(name = "announcement_id")
@@ -52,6 +53,16 @@ public class Announcement {
 
     public void setDateTime(Timestamp dateTime) {
         this.dateTime = dateTime;
+    }
+
+    @Basic
+    @Column(name = "announcement_hash")
+    public Integer getAnnouncementHash() {
+        return announcementHash;
+    }
+
+    public void setAnnouncementHash(Integer announcementHash) {
+        this.announcementHash = announcementHash;
     }
 
     @Override
