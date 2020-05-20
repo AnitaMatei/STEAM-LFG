@@ -25,6 +25,9 @@ public class AppConfig {
     }
 
     @Bean
+    public CommentService commentService(){return new CommentServiceImpl(modelMapper());}
+
+    @Bean
     public ModelMapper modelMapper() {
         return new ModelMapper();
     }

@@ -1,9 +1,11 @@
 package com.steamlfg.controller;
 
 import com.steamlfg.model.dto.AnnouncementDTO;
+import com.steamlfg.model.dto.CommentDTO;
 import com.steamlfg.model.dto.UserDTO;
 import com.steamlfg.model.principal.UserPrincipal;
 import com.steamlfg.service.AnnouncementService;
+import com.steamlfg.service.CommentService;
 import com.steamlfg.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,6 +24,8 @@ public class MainController {
     AnnouncementService announcementService;
     @Autowired
     UserService userService;
+    @Autowired
+    CommentService commentService;
 
 
     @GetMapping("/")
@@ -40,8 +44,10 @@ public class MainController {
     public ModelAndView getAnnouncement(@PathVariable int id){
         ModelAndView modelAndView = new ModelAndView("announcement");
         AnnouncementDTO announcementDTO = announcementService.findByAnnouncementHash(id);
+        List<CommentDTO> commentDTOS = commentService.findAllByAnnouncementHashOrderByDateTimeDesc(0,announcementDTO.getAnnouncementHash());
 
         modelAndView.addObject("announcement_object",announcementDTO);
+        modelAndView.addObject("comment_objects",commentDTOS);
         return modelAndView;
     }
 

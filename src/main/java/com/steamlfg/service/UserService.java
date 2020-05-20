@@ -7,8 +7,8 @@ import java.util.List;
 
 @Service
 public interface UserService {
-    public UserDTO findByUserId(Integer userId);
-    public UserDTO findByOid(String oid);
-    public List<UserDTO> findAll();
-    public UserDTO saveUser(String oid);
+    UserDTO findByUserId(Integer userId);
+    UserDTO findByOid(String oid);
+    List<UserDTO> findAll();
+    UserDTO saveUser(String oid);
 }
