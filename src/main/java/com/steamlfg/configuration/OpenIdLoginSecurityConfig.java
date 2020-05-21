@@ -23,6 +23,7 @@ public class OpenIdLoginSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/api/announcement/add").authenticated()
+                .antMatchers("/api/comment/add").authenticated()
                 /*.antMatchers("/css/**").permitAll()*/
                 .anyRequest().permitAll()
                 .and()

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
@@ -25,8 +26,9 @@ public class AnnouncementController {
     }
 
     @PostMapping("/add")
-    void addAnnouncement(@RequestParam Map<String, String> query) {
+    RedirectView addAnnouncement(@RequestParam Map<String, String> query) {
         announcementService.addAnnouncement(query.get("title"), query.get("description"), query.get("appId"));
+        return new RedirectView("/");
     }
 
     @GetMapping("/page/{id}")

@@ -46,7 +46,9 @@ public class MainController {
         AnnouncementDTO announcementDTO = announcementService.findByAnnouncementHash(id);
         List<CommentDTO> commentDTOS = commentService
                 .findAllByAnnouncementHashOrderByMessageDateTimeDesc(0,announcementDTO.getAnnouncementHash());
-
+        for(CommentDTO commentDTO : commentDTOS){
+            System.out.println(commentDTO.getUserByUserId().getUsername());
+        }
 
         modelAndView.addObject("announcement_object",announcementDTO);
         modelAndView.addObject("comment_objects",commentDTOS);
