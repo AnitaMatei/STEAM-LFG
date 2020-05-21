@@ -1,6 +1,7 @@
 package com.steamlfg.configuration;
 
 import com.steamlfg.model.handler.CustomAuthenticationSuccessHandler;
+import com.steamlfg.model.handler.CustomLogoutSuccessHandler;
 import com.steamlfg.service.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
@@ -37,6 +38,11 @@ public class AppConfig {
     @Bean
     public CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler() {
         return new CustomAuthenticationSuccessHandler();
+    }
+
+    @Bean
+    public CustomLogoutSuccessHandler customLogoutSuccessHandler(){
+        return new CustomLogoutSuccessHandler();
     }
 
 }
