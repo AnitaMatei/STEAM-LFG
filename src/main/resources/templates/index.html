@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
-
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta content="text/html; charset=ISO-8859-1" http-equiv="Content-Type">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
 
     <!--Bootstrap css-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
@@ -16,7 +15,7 @@
 
     <title>STEAM LFG</title>
 </head>
-<body style="background-color: #1b2838;" onload="onLoad()">
+<body onload="onLoad()" style="background-color: #1b2838;">
 
 <!--/*@thymesVar id="avatar" type=""*/-->
 <!--/*@thymesVar id="steamprofile" type=""*/-->
@@ -28,8 +27,8 @@
     <div class="container">
 
         <a class="navbar-brand mb-0 h1" th:href="@{/}">Steam LFG</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
+                data-target="#navbarNav" data-toggle="collapse" type="button">
             <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -42,13 +41,13 @@
 
             <!--If user is not logged in-->
             <th:block th:if="${loginbutton == 'visible'}">
-                <a class="my-2 my-lg-0" type="submit" th:href="@{/login}">
-                    <img src="https://steamcdn-a.akamaihd.net/steamcommunity/public/images/steamworks_docs/english/sits_large_noborder.png"
-                         alt="Sign in through Steam"></a>
+                <a class="my-2 my-lg-0" th:href="@{/login}" type="submit">
+                    <img alt="Sign in through Steam"
+                         src="https://steamcdn-a.akamaihd.net/steamcommunity/public/images/steamworks_docs/english/sits_large_noborder.png"></a>
             </th:block>
             <!--Else user is logged in and we display user's Steam Avatar-->
             <th:block th:unless="${loginbutton == 'visible'}">
-                <img th:src="${avatar}" alt="Steam Avatar" src="">
+                <img alt="Steam Avatar" src="" th:src="${avatar}">
                 <a th:href="@{${steamprofile}}" th:text="${username}"></a>
                 <a th:href="@{/logout}" th:text="${'LOG OUT'}"></a>
             </th:block>
@@ -59,25 +58,27 @@
 </nav>
 
 <div class="container mt-5">
-    <button id="create-post-btn" type="button" class="btn btn-primary justify-content-center" data-toggle="modal"
-            data-target="#create-post-modal" onclick="onCreateBtnClick()">
+    <button class="btn btn-primary justify-content-center" data-target="#create-post-modal" data-toggle="modal"
+            id="create-post-btn"
+            onclick="onCreateBtnClick()" type="button">
         Create Announcement
     </button>
 
-    <div class="modal fade" id="create-post-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-         aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" data-backdrop="static"
+         data-keyboard="false"
+         id="create-post-modal" role="dialog" tabindex="-1">
         <div class="modal-dialog modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Create an announcement</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button aria-label="Close" class="close" data-dismiss="modal" type="button">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form id="post-form" action="/api/announcement/add" method="post">
+                <form action="/api/announcement/add" id="post-form" method="post">
                     <div class="form-group">
                         <label for="post-title-input">Title</label>
-                        <input class="form-control" id="post-title-input" type="text" name="title">
+                        <input class="form-control" id="post-title-input" name="title" type="text">
                     </div>
                     <div class="form-group">
                         <label for="post-desc-input">Description</label>
@@ -85,8 +86,8 @@
                     </div>
                     <div class="form-group">
                         <label for="select-game">Related Game</label>
-                        <input id="select-game" class="form-control" type="text">
-                        <select class="form-control" name="appId" id="matched-games"></select>
+                        <input class="form-control" id="select-game" type="text">
+                        <select class="form-control" id="matched-games" name="appId"></select>
                         <!--<select id="select-game" class="form-control selectpicker" data-live-search="true"
                                 onkeypress="getGameSearchResults()">
                             <option value="" disabled selected>Choose related game</option>
@@ -95,8 +96,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="submit" form="post-form" class="btn btn-primary">Post</button>
+                <button class="btn btn-secondary" data-dismiss="modal" type="button">Cancel</button>
+                <button class="btn btn-primary" form="post-form" type="submit">Post</button>
             </div>
         </div>
     </div>
@@ -113,99 +114,24 @@
         <tbody id="posts-body"></tbody>
     </table>
 
-    <ul class="nav nav-pills justify-content-center">
-        <li class="nav-item"><a class="nav-link active" href="#">Previous</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Next</a></li>
-    </ul>
+    <nav aria-label="Posts page navigation">
+        <ul class="pagination justify-content-center">
+            <li class="page-item"><a class="page-link" href="#" style="background-color: #171a21;">Previous</a></li>
+            <li class="page-item"><a class="page-link" href="#" style="background-color: #171a21;">Next</a></li>
+        </ul>
+    </nav>
 </div>
 
-<!--My scripts-->
-<script>
-    const rootURL = window.location.href.substring(0,window.location.href.length-1);
-    const pageURL = rootURL + "/api/announcement/page/";
-    const gamesSearchURL = rootURL + "/api/game/search";
-
-    let searchInput;
-
-    function addDataToTable(postsJson) {
-        let tbody = document.querySelector("#posts-body");
-        tbody.innerHTML = "";        // Clear previous data, to prepare for loading new data
-
-        for (let i = 0; i < postsJson.length; ++i) {
-            let th = document.createElement("th");
-            th.scope = "row";
-            th.textContent = (i + 1).toString();
-            let title_td = document.createElement("td");
-            title_td.textContent = postsJson[i].announcementTitle;
-            let gameName_td = document.createElement("td");
-            gameName_td.textContent = postsJson[i].gameByGameId.gameName;
-            let userName_td = document.createElement("td");
-            userName_td.innerHTML = '<a href="' + postsJson[i].userByUserId.steamProfile + '">' +
-                postsJson[i].userByUserId.username + '</a>';
-            let tr = document.createElement("tr");
-            tr.append(th, gameName_td, title_td, userName_td);
-            tbody.appendChild(tr);
-        }
-    }
-
-    function setGamesSelectOptions(gamesJson) {
-        let select = document.getElementById("matched-games");
-        select.innerHTML = '';  //Clear old options
-        for (let i = 0; i < gamesJson.length; i++) {
-            let option = document.createElement("option");
-            option.value = gamesJson[i].steamAppId;
-            option.innerText = gamesJson[i].gameName;
-            select.appendChild(option);
-        }
-    }
-
-    function getGameSearchResults() {
-        let gameName = searchInput.value;
-        if (gameName !== '') {
-            let url = new URL(gamesSearchURL);
-            let params = {gameName: searchInput.value};
-            url.search = new URLSearchParams(params).toString();
-            fetch(url.toString())
-                .then(response => response.json())
-                .then(data => {
-                    setGamesSelectOptions(data);
-                    console.log(data);
-                })
-                .catch(err => console.log('ERROR: ', err.message));
-        }
-    }
-
-    function getPagePosts(pageId) {
-        fetch(pageURL + pageId)
-            .then(response => response.json())
-            .then(data => {
-                addDataToTable(data);
-                // console.log(data);
-            })
-            .catch(err => console.log('ERROR: ', err.message));
-    }
-
-    function onCreateBtnClick() {
-        // searchInput = document.querySelector("#userDropdown .bs-searchbox input");
-        searchInput = document.querySelector("#select-game");
-        searchInput.addEventListener('keyup', getGameSearchResults);
-    }
-
-    function onLoad() {
-        getPagePosts(0);
-    }
-</script>
-
 <!--Bootstrap js-->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+<script crossorigin="anonymous"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script crossorigin="anonymous"
         integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script crossorigin="anonymous"
         integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
-        crossorigin="anonymous"></script>
+        src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 </body>
 
