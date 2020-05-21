@@ -1,4 +1,4 @@
-const rootURL = "";//window.location.origin;
+const rootURL = window.location.origin;
 const pageURL = rootURL + "/api/announcement/page/";
 const gamesSearchURL = rootURL + "/api/game/search";
 
@@ -42,6 +42,7 @@ function setGamesSelectOptions(gamesJson) {
 
 function getGameSearchResults() {
     let gameName = searchInput.value;
+    console.log(gamesSearchURL);
     if (gameName !== '') {
         let url = new URL(gamesSearchURL);
         let params = {gameName: searchInput.value};
