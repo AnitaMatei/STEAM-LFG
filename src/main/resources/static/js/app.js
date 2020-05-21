@@ -1,4 +1,4 @@
-const rootURL = window.location.href.substring(0, window.location.href.length - 1);
+const rootURL = "";//window.location.origin;
 const pageURL = rootURL + "/api/announcement/page/";
 const gamesSearchURL = rootURL + "/api/game/search";
 
