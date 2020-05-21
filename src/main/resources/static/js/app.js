@@ -2,6 +2,8 @@ const rootURL = "";//window.location.origin;
 const pageURL = rootURL + "/api/announcement/page/";
 const gamesSearchURL = rootURL + "/api/game/search";
 
+const postsPerPage = 5;
+let currentPageId;
 let postsArray;
 let searchInput;
 
@@ -12,7 +14,7 @@ function addDataToTable() {
     for (let i = 0; i < postsArray.length; ++i) {
         let th = document.createElement("th");
         th.scope = "row";
-        th.textContent = (i + 1).toString();
+        th.textContent = (currentPageId * postsPerPage + i + 1).toString();
         let title_td = document.createElement("td");
         let td_a = document.createElement("a");
         td_a.textContent = postsArray[i].announcementTitle;
@@ -44,15 +46,15 @@ function getGameSearchResults() {
     let gameName = searchInput.value;
     if (gameName !== '') {
         let url = new URL(gamesSearchURL);
-        let params = {gameName: searchInput.value};
+        let params = {gameName: gameName};
         url.search = new URLSearchParams(params).toString();
         fetch(url.toString())
             .then(response => response.json())
             .then(data => {
                 setGamesSelectOptions(data);
-                console.log(data);
+                // console.log(data);
             })
-            .catch(err => console.log('ERROR: ', err.message));
+            .catch(err => console.error('ERROR: ', err.message));
     }
 }
 
@@ -64,7 +66,7 @@ function getPagePosts(pageId) {
             addDataToTable();
             // console.log(data);
         })
-        .catch(err => console.log('ERROR: ', err.message));
+        .catch(err => console.error('ERROR: ', err.message));
 }
 
 function onCreateBtnClick() {
@@ -73,6 +75,28 @@ function onCreateBtnClick() {
     searchInput.addEventListener('keyup', getGameSearchResults);
 }
 
+function loadPrevPage() {
+    if (currentPageId > 0) {
+        currentPageId--;
+        getPagePosts(currentPageId);
+    }
+}
+
+function loadNextPage() {
+    fetch(pageURL + (currentPageId + 1))
+        .then(response => response.json())
+        .then(data => {
+            if (data.length) {
+                postsArray = data;
+                currentPageId++;
+                console.log(postsArray);
+                addDataToTable();
+            }
+        })
+        .catch(err => console.error('ERROR: ', err.message));
+}
+
 function onLoad() {
+    currentPageId = 0;
     getPagePosts(0);
 }
