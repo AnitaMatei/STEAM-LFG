@@ -42,10 +42,11 @@ public class MainController {
 
     @GetMapping("/announcements/{id}")
     public ModelAndView getAnnouncement(@PathVariable int id){
-        ModelAndView modelAndView = new ModelAndView("announcement");
+        ModelAndView modelAndView = createModelLoggedIn("announcement");;
         AnnouncementDTO announcementDTO = announcementService.findByAnnouncementHash(id);
         List<CommentDTO> commentDTOS = commentService
                 .findAllByAnnouncementHashOrderByMessageDateTimeDesc(0,announcementDTO.getAnnouncementHash());
+
 
         modelAndView.addObject("announcement_object",announcementDTO);
         modelAndView.addObject("comment_objects",commentDTOS);

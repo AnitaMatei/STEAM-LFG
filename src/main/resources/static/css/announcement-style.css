@@ -1,0 +1,56 @@
+.post-op {
+    position: relative;
+    padding: 7px 12px 21px 63px;
+    margin-bottom: 8px;
+    background-color: #212f43;
+    background-image: url(https://steamcommunity-a.akamaihd.net/public/images//skin_1/forum_op_gradient.png?v=3);
+    background-size: cover;
+    background-position: top left;
+    border: 1px solid #26384f;
+    box-shadow: 0 0 5px #000;
+}
+
+.comment-box {
+    background-color: rgba(32, 47, 67, 0.8);
+    color: #acb2b8;
+    margin-bottom: 2px;
+    padding: 12px 8px 20px 60px;
+    border: 1px solid #26384f;
+    box-shadow: 0 0 5px #000;
+    overflow: hidden;
+}
+
+.new-comment-box {
+    background-color: rgba(0, 0, 0, 0.2);
+    color: #acb2b8;
+    padding: 14px 11px 14px 11px;
+    margin-bottom: 8px;
+    margin-top: 0;
+}
+
+.new-comment-box textarea {
+    width: 100%;
+    resize: none;
+    overflow: hidden;
+    outline: none;
+    color: #BFBFBF;
+    border: 2px solid #000000;
+    border-radius: 5px;
+    background-color: transparent;
+}
+
+.post-op, .comment-box a h6 {
+    color: gray;
+}
+
+.post-op, .comment-box a h6 :hover {
+    color: white;
+}
+
+body {
+    background-color: #1b2838;
+}
+
+.navbar {
+    background-color: #171a21;
+}

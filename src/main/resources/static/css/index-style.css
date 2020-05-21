@@ -1,7 +1,16 @@
+/*
 .form {
     background-color: #efefef;
     width: 400px;
     height: 50px;
     border-radius: 7px;
     padding: 20px;
+}*/
+
+body, table.table-dark{
+    background-color: #1b2838;
+}
+
+.navbar, .page-link {
+    background-color: #171a21;
 }

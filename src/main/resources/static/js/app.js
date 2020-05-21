@@ -14,11 +14,9 @@ function addDataToTable() {
         th.scope = "row";
         th.textContent = (i + 1).toString();
         let title_td = document.createElement("td");
-        //TODO Find a way to put a link to the announcement's templated view, from javascrip
         let td_a = document.createElement("a");
         td_a.textContent = postsArray[i].announcementTitle;
-        td_a.setAttribute("th:href", "=@{/announcements/" + postsArray[i].announcementHash.toString() + "}");
-        td_a.type = "submit";
+        td_a.href = window.location.origin + "/announcements/" + postsArray[i].announcementHash.toString();
         title_td.appendChild(td_a);
         let gameName_td = document.createElement("td");
         gameName_td.textContent = postsArray[i].gameByGameId.gameName;

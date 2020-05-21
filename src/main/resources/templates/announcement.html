@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta content="text/html; charset=ISO-8859-1" http-equiv="Content-Type">
     <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
@@ -7,12 +7,100 @@
     <!--Bootstrap css-->
     <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/announcement-style.css}">
 
     <title>STEAM LFG</title>
 </head>
 <body>
 
+<!--/*@thymesVar id="avatar" type=""*/-->
+<!--/*@thymesVar id="steamprofile" type=""*/-->
+<!--/*@thymesVar id="username" type=""*/-->
+<nav class="navbar navbar-expand-sm navbar-dark">
+    <div class="container">
 
+        <a class="navbar-brand mb-0 h1" th:href="@{/}">Steam LFG</a>
+        <button aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
+                data-target="#navbarNav" data-toggle="collapse" type="button">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item"><a class="nav-link" href="#">Games</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">About</a></li>
+            </ul>
+
+            <!--If user is not logged in-->
+            <th:block th:if="${loginbutton == 'visible'}">
+                <a class="my-2 my-lg-0" th:href="@{/login}" type="submit">
+                    <img alt="Sign in through Steam"
+                         src="https://steamcdn-a.akamaihd.net/steamcommunity/public/images/steamworks_docs/english/sits_large_noborder.png"></a>
+            </th:block>
+            <!--Else user is logged in and we display user's Steam Avatar-->
+            <th:block th:unless="${loginbutton == 'visible'}">
+
+                <img alt="Steam Avatar" src="" th:src="${avatar}">
+
+                <a th:href="@{${steamprofile}}" th:text="${username}"></a>
+                <a th:href="@{/logout}" th:text="${'LOG OUT'}"></a>
+            </th:block>
+
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-5">
+    <div class="post-op">
+        <div class="row">
+            <a th:href="${announcement_object.userByUserId.steamProfile}">
+                <img alt="OP profile img" th:src="${announcement_object.userByUserId.iconLink}">
+                <h6 class="text-light" th:text="${announcement_object.userByUserId.username}"></h6>
+            </a>
+        </div>
+        <div class="row">
+            <div class="col-9">
+                <h2 class="text-light" th:text="${announcement_object.announcementTitle}"></h2>
+                <p class="text-light" th:text="${announcement_object.announcementDescription}"></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="new-comment-box">
+        <!--If user is not logged in-->
+        <th:block th:if="${loginbutton == 'visible'}">
+            <h2 class="text-light">Please Sign in to be able to comment</h2>
+        </th:block>
+        <!--else-->
+        <th:block th:unless="${loginbutton == 'visible'}">
+            <form action="/api/comment/add" method="post">
+                <input name="announcementHash" th:value="${announcement_object.announcementHash}" type="hidden">
+                <div class="form-group">
+                    <label for="msg-area">Reply</label>
+                    <textarea id="msg-area" name="msg" placeholder="Type you reply..." rows="3" tabindex="1"></textarea>
+                </div>
+                <button class="btn btn-dark" type="submit">Submit</button>
+            </form>
+        </th:block>
+    </div>
+
+    <th:block th:each="comment : ${comment_objects}">
+        <div class="comment-box">
+            <div class="row">
+                <a th:href="${comment.userByUserId.steamProfile}">
+                    <img alt="Replier profile img" th:src="${comment.userByUserId.iconLink}">
+                    <h6 class="text-light" th:text="${comment.userByUserId.username}"></h6>
+                </a>
+            </div>
+            <div class="row">
+                <div class="col-9">
+                    <p class="text-light" th:text="${comment.messageTxt}"></p>
+                </div>
+            </div>
+        </div>
+    </th:block>
+</div>
 
 <script crossorigin="anonymous"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
