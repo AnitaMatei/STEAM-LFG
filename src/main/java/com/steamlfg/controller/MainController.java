@@ -8,7 +8,9 @@ import com.steamlfg.service.AnnouncementService;
 import com.steamlfg.service.CommentService;
 import com.steamlfg.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -26,6 +30,8 @@ public class MainController {
     UserService userService;
     @Autowired
     CommentService commentService;
+    @Autowired
+    private SessionRegistry sessionRegistry;
 
 
     @GetMapping("/")
@@ -54,6 +60,17 @@ public class MainController {
         modelAndView.addObject("comment_objects",commentDTOS);
         return modelAndView;
     }
+
+    @GetMapping("/online-users")
+    private ModelAndView getOnlineUsers(){
+        ModelAndView modelAndView = createModelLoggedIn("online-users");
+        List<UserPrincipal> userPrincipals = (List<UserPrincipal>)(List)sessionRegistry.getAllPrincipals();
+        modelAndView.addObject("users",userPrincipals);
+
+        return modelAndView;
+
+    }
+
 
     private ModelAndView createModelLoggedIn(String file){
         ModelAndView model = new ModelAndView(file);

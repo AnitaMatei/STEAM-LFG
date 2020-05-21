@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<th:block th:each="user : ${users}">
+    <a th:href="${user.user.steamProfile}">
+        <img th:src="${user.user.iconLink}">
+        <h6 th:text="${user.user.username}"></h6>
+    </a>
+</th:block>
+</body>
+</html>

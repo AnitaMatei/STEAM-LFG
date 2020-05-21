@@ -4,10 +4,13 @@ package com.steamlfg.configuration;
 import com.steamlfg.model.handler.CustomAuthenticationSuccessHandler;
 import com.steamlfg.service.CustomAuthenticationUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
 
 @Configuration
 @EnableWebSecurity
@@ -37,7 +40,15 @@ public class OpenIdLoginSecurityConfig extends WebSecurityConfigurerAdapter {
                 .rememberMe().tokenValiditySeconds(2592000)
                 .and()
                 .csrf().disable();
+
+        http
+            .sessionManagement().maximumSessions(1).sessionRegistry(sessionRegistry());
     }
+    @Bean
+    SessionRegistry sessionRegistry() {
+        return new SessionRegistryImpl();
+    }
+
 
 
 }
