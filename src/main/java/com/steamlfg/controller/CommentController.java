@@ -15,12 +15,12 @@ public class CommentController {
     CommentService commentService;
 
     @PostMapping("/add")
-    CommentDTO addAnnouncement(@RequestParam Map<String, String> query) {
-        return commentService.addComment(query.get("msg"), Integer.parseInt(query.get("announcementHash")));
+    void addComment(@RequestParam Map<String, String> query) {
+        commentService.addComment(query.get("msg"), Integer.parseInt(query.get("announcementHash")));
     }
 
     @GetMapping("/page/{id}")
-    List<CommentDTO> getLastAnnouncementByPage(@PathVariable Integer id, @RequestParam int announcementHash) {
+    List<CommentDTO> getLastCommentByPage(@PathVariable Integer id, @RequestParam int announcementHash) {
         if (id < 0)
             return null;
         else return commentService.findAllByAnnouncementHashOrderByMessageDateTimeDesc(id,announcementHash);
