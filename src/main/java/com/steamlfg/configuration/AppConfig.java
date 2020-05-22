@@ -31,6 +31,11 @@ public class AppConfig {
     public CommentService commentService(){return new CommentServiceImpl(modelMapper());}
 
     @Bean
+    public NewsService newsService(){
+        return new NewsServiceImpl(modelMapper());
+    }
+
+    @Bean
     public ModelMapper modelMapper() {
         return new ModelMapper();
     }

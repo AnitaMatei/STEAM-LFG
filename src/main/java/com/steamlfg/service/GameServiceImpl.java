@@ -12,6 +12,7 @@ import org.springframework.ui.ModelMap;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,4 +53,5 @@ public class GameServiceImpl implements GameService {
             return null;
         return modelMapper.map(game,GameDTO.class);
     }
+
 }
