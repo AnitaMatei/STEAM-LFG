@@ -1,12 +1,11 @@
-/*
-datalist {
-    width: 100px;
-    background-color: #1b2838;
-    color: #1b2838;
-    font-size: 50px;
-}
-*/
-
 body {
+    background-color: #1b2838;
+}
+
+.navbar, .btn-dark {
     background-color: #171a21;
+}
+
+img {
+    
 }

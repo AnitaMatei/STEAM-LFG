@@ -13,32 +13,57 @@
 
     <title>STEAM LFG</title>
 </head>
-<body>
+<body onload="onLoad()">
 
-<div class="container">
-    <form action="/news" method="get">
-        <!--<div class="form-group">
-            <label for="search-box">Related Game</label>
-            <input class="form-control" id="search-box" list="search-list" name="option" type="text">
+<nav class="navbar navbar-expand-sm navbar-dark">
+    <div class="container">
+
+        <a class="navbar-brand mb-0 h1" th:href="@{/}">Steam LFG</a>
+        <button aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
+                data-target="#navbarNav" data-toggle="collapse" type="button">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item"><a class="nav-link" th:href="@{/news}">News</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/online-users}">Online Users</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/about}">About</a></li>
+            </ul>
+
+            <!--If user is not logged in-->
+            <th:block th:if="${loginbutton == 'visible'}">
+                <a class="my-2 my-lg-0" th:href="@{/login}" type="submit">
+                    <img alt="Sign in through Steam"
+                         src="https://steamcdn-a.akamaihd.net/steamcommunity/public/images/steamworks_docs/english/sits_large_noborder.png"></a>
+            </th:block>
+            <!--Else user is logged in and we display user's Steam Avatar-->
+            <th:block th:unless="${loginbutton == 'visible'}">
+                <img alt="Steam Avatar" src="" th:src="${avatar}">
+                <a th:href="@{${steamprofile}}" th:text="${username}"></a>
+                <a th:href="@{/logout}" th:text="${'LOG OUT'}"></a>
+            </th:block>
+
         </div>
-        <datalist id="search-list">
-            <option value="kek1">KEK1</option>
-            <option value="kek2">KEK2</option>
-            <option value="kek3">KEK3</option>
-        </datalist>-->
-        <div class="form-group">
-            <label for="select-game">Relate Game</label>
-            <select class="form-control selectpicker" data-live-search="true" id="select-game" name="appId">
-                <option value="550">L4D2</option>
-                <option value="500">L4D</option>
+    </div>
+</nav>
+
+<div class="container mt-5">
+    <form action="/news" class="form-inline" method="get">
+        <div class="w-75 justify-content-center" id="search-div">
+            <select class="form-control w-75 float-right selectpicker" data-live-search="true" id="select-game"
+                    name="appId">
             </select>
         </div>
-        <button class="btn btn-primary" type="submit">Submit</button>
+        <button class="btn btn-outline-success" type="submit">Search</button>
     </form>
+
     <div class="row" th:if="${hasNews} == true">
-        <h1 class="text-light" th:text="${news_objects[0].gameByGameId.gameName}"></h1>
+        <h1 class="text-light" th:utext="${news_objects[0].gameByGameId.gameName}"></h1>
         <th:block th:each="news : ${news_objects}">
             <h1 class="text-light" th:text="${news.title}"></h1>
+            <div th:remove="tag" th:utext="${news.content}"></div>
         </th:block>
     </div>
 </div>
@@ -54,20 +79,47 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
 <script>
-    /*$(document).ready(function () {
-        var options = [];
-        var src = [
-            {id: 1, txt: "test 1"},
-            {id: 2, txt: "test 2"},
-            {id: 3, txt: "test 3"}
-        ];
-        src.forEach(function (item) {
-            var option = "<option>" + item.txt + "</option>"
+    const rootURL = window.location.origin;
+    const gamesSearchURL = rootURL + "/api/game/search";
+
+    let searchInput;
+
+    function setGamesSelectOptions(gamesJson) {
+        let options = [];
+        gamesJson.forEach(function (gameObject) {
+            let option = document.createElement("option");
+            option.value = gameObject.steamAppId;
+            option.innerText = gameObject.gameName;
             options.push(option);
         });
-        $('.selectpicker').html(options);
-        $('.selectpicker').selectpicker('refresh');
-    });*/
+
+        let select_game = $('#select-game').html(options);
+        select_game.selectpicker('refresh');
+    }
+
+    function onSearchInput() {
+        let gameName = searchInput.value;
+        console.log(gamesSearchURL);
+        if (gameName !== '') {
+            let url = new URL(gamesSearchURL);
+            let params = {gameName: gameName};
+            url.search = new URLSearchParams(params).toString();
+            fetch(url.toString())
+                .then(response => response.json())
+                .then(data => {
+                    setGamesSelectOptions(data);
+                    // console.log(data);
+                })
+                .catch(err => console.error('ERROR: ', err.message));
+        }
+    }
+
+    function onLoad() {
+        setTimeout(function () {
+            searchInput = document.querySelector('#search-div .bs-searchbox input');
+            searchInput.addEventListener('input', onSearchInput);
+        }, 100);
+    }
 </script>
 </body>
 </html>
