@@ -10,19 +10,14 @@ import com.steamlfg.service.CommentService;
 import com.steamlfg.service.NewsService;
 import com.steamlfg.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -81,13 +76,17 @@ public class MainController {
     private ModelAndView getGameNews(
             @RequestParam(value = "appId", required = false) String steamAppId) {
         ModelAndView modelAndView = createModelLoggedIn("news");
+        boolean hasNews;
 
         if (steamAppId == null) {
+            hasNews = false;
             System.out.println("returning empty search bar");
         } else {
+            hasNews = true;
             List<NewsDTO> newsDTOS = newsService.findAllBySteamAppOrderByDateDesc(steamAppId);
-            modelAndView.addObject("news-objects", newsDTOS);
+            modelAndView.addObject("news_objects", newsDTOS);
         }
+        modelAndView.addObject("hasNews", hasNews);
 
         return modelAndView;
 

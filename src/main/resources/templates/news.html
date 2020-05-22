@@ -1,10 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta content="text/html; charset=ISO-8859-1" http-equiv="Content-Type">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+
+    <!--Bootstrap css-->
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css"
+          rel="stylesheet">
+    <link href="../static/css/news-style.css" rel="stylesheet" th:href="@{/css/news-style.css}">
+
+    <title>STEAM LFG</title>
 </head>
 <body>
 
+<div class="container">
+    <form action="/news" method="get">
+        <!--<div class="form-group">
+            <label for="search-box">Related Game</label>
+            <input class="form-control" id="search-box" list="search-list" name="option" type="text">
+        </div>
+        <datalist id="search-list">
+            <option value="kek1">KEK1</option>
+            <option value="kek2">KEK2</option>
+            <option value="kek3">KEK3</option>
+        </datalist>-->
+        <div class="form-group">
+            <label for="select-game">Relate Game</label>
+            <select class="form-control selectpicker" data-live-search="true" id="select-game" name="appId">
+                <option value="550">L4D2</option>
+                <option value="500">L4D</option>
+            </select>
+        </div>
+        <button class="btn btn-primary" type="submit">Submit</button>
+    </form>
+    <div class="row" th:if="${hasNews} == true">
+        <h1 class="text-light" th:text="${news_objects[0].gameByGameId.gameName}"></h1>
+        <th:block th:each="news : ${news_objects}">
+            <h1 class="text-light" th:text="${news.title}"></h1>
+        </th:block>
+    </div>
+</div>
+<script crossorigin="anonymous"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script crossorigin="anonymous"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script crossorigin="anonymous"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+
+<script>
+    /*$(document).ready(function () {
+        var options = [];
+        var src = [
+            {id: 1, txt: "test 1"},
+            {id: 2, txt: "test 2"},
+            {id: 3, txt: "test 3"}
+        ];
+        src.forEach(function (item) {
+            var option = "<option>" + item.txt + "</option>"
+            options.push(option);
+        });
+        $('.selectpicker').html(options);
+        $('.selectpicker').selectpicker('refresh');
+    });*/
+</script>
 </body>
 </html>
