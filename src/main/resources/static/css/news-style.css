@@ -6,6 +6,17 @@ body {
     background-color: #171a21;
 }
 
-img {
-    
+.container{
+    color: white;
+}
+
+div.row img {
+    height: auto;
+    width: auto;
+    max-width: 500px;
+    max-height: 500px;
+}
+
+.row p {
+    color: white;
 }
