@@ -1,0 +1,16 @@
+
+body, table.table-dark{
+    background-color: #1b2838;
+}
+
+.navbar {
+    background-color: #171a21;
+}
+.users_container{
+    margin-top: 50px;
+}
+.user_cell{
+    margin: 15px;
+    max-width: 300px;
+    background: #212f43;
+}
