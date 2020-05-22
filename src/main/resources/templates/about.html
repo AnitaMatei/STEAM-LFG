@@ -1,10 +1,57 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta content="text/html; charset=ISO-8859-1" http-equiv="Content-Type">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+
+    <!--Bootstrap css-->
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/online-users-style.css}">
+    <script th:src="@{/js/app.js}" type="text/javascript"></script>
+
+    <title>STEAM LFG</title>
 </head>
 <body>
+<nav class="navbar navbar-expand-sm navbar-dark">
+    <div class="container">
 
+        <a class="navbar-brand mb-0 h1" th:href="@{/}">Steam LFG</a>
+        <button aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
+                data-target="#navbarNav" data-toggle="collapse" type="button">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item"><a class="nav-link" th:href="@{/news}">News</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/online-users}">Online Users</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/about}">About</a></li>
+            </ul>
+
+            <!--If user is not logged in-->
+            <th:block th:if="${loginbutton == 'visible'}">
+                <a class="my-2 my-lg-0" th:href="@{/login}" type="submit">
+                    <img alt="Sign in through Steam"
+                         src="https://steamcdn-a.akamaihd.net/steamcommunity/public/images/steamworks_docs/english/sits_large_noborder.png"></a>
+            </th:block>
+            <!--Else user is logged in and we display user's Steam Avatar-->
+            <th:block th:unless="${loginbutton == 'visible'}">
+
+                <img alt="Steam Avatar" src="" th:src="${avatar}">
+
+                <a th:href="@{${steamprofile}}" th:text="${username}"></a>
+                <a th:href="@{/logout}" th:text="${'LOG OUT'}"></a>
+            </th:block>
+        </div>
+    </div>
+</nav>
+<h2 class="text-center text-light mt-4 pb-5">About</h2>
+<h5 class="text-center text-light mt-3 pb-4">This is a site where you can login through Steam platform and post announcements for the games you are playing. GLHF!</h5>
+<h2 class="text-center text-light mt-4 pb-5">Contact</h2>
+<h5 class="text-center text-light mt-3 pb-4">Anita Matei | email: matei-gabriel.anita@my.fmi.unibuc.ro</h5>
+<h5 class="text-center text-light mt-3 pb-4">Coman Valentin | email: valentin-gabriel.coman@my.fmi.unibuc.ro</h5>
+<h5 class="text-center text-light mt-3 pb-4">Halalai Mircea | email: mircea-costin.halalai@my.fmi.unibuc.ro</h5>
 </body>
 </html>
