@@ -12,5 +12,5 @@ import java.util.Optional;
 public interface GameRepository extends CrudRepository<Game,Integer> {
     Optional<Game> findTopBySteamAppId(String steamAppId);
     Optional<Game> findByGameName(String gameName);
-    List<Game> findTop20ByGameNameContains(String gameName);
+    List<Game> findTop20ByGameNameContainsOrderByGameNameAsc(String gameName);
 }
