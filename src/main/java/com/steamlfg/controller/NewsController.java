@@ -15,8 +15,7 @@ import java.util.List;
 public class NewsController {
     @Autowired
     NewsService newsService;
-
-
+    
     @GetMapping("/{id}")
     List<NewsDTO> getNewsBySteamAppId(@PathVariable String id){
         return newsService.findAllBySteamAppOrderByDateDesc(id);
