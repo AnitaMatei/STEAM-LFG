@@ -3,16 +3,10 @@ package com.steamlfg.service;
 import com.steamlfg.model.dto.GameDTO;
 import com.steamlfg.model.entity.Game;
 import com.steamlfg.repository.GameRepository;
-import com.steamlfg.utils.HttpClientGame;
-import com.steamlfg.utils.ParseSteamData;
 import org.modelmapper.ModelMapper;
-import org.openid4java.server.ServerException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.ModelMap;
 
-import javax.annotation.PostConstruct;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,7 +30,7 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public List<GameDTO> findTop20ByGameNameContains(String gameName) {
-        List<Game> games = gameRepository.findTop20ByGameNameContains(gameName);
+        List<Game> games = gameRepository.findTop20ByGameNameContainsOrderByGameNameAsc(gameName);
         List<GameDTO> gameDTOS = new ArrayList<>();
         for(Game game : games){
             gameDTOS.add(modelMapper.map(game,GameDTO.class));
